@@ -44,6 +44,7 @@ func (rm *RetrieveMountains) retrieveMountains(inEvent *events.RetrieveMountains
 	rows, err := rm.DBO.Query("SELECT m.uuid, m.name, m.height, m.latitude, m.longitude, m.difficulty, m.description, m.created_at FROM (SELECT m_i.id FROM kudaki_mountain.mountains m_i LIMIT ?, ? ) m_ids JOIN kudaki_mountain.mountains m ON m_ids.id = m.id;",
 		inEvent.Offset, inEvent.Limit)
 	errorkit.ErrorHandled(err)
+	defer rows.Close()
 
 	var mountains []*MountainTemp
 	for rows.Next() {
@@ -71,6 +72,7 @@ func (rm *RetrieveMountains) retrieveAndPasteMountainFiles(mountains []*Mountain
 		rows, err := rm.DBO.Query("SELECT mf.file_path FROM kudaki_mountain.mountain_files mf WHERE mf.mountain_uuid = ?;",
 			mountains[i].Uuid)
 		errorkit.ErrorHandled(err)
+		defer rows.Close()
 
 		var mtf MountainPhotoTemp
 		for rows.Next() {
