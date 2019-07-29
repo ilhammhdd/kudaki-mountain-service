@@ -37,7 +37,4 @@ ENV DB_NAME=$DB_NAME
 
 COPY --from=build-env /go/src/github.com/ilhammhdd/kudaki-mountain-service/kudaki_mountain_service_app .
 
-RUN mkdir /certs
-VOLUME /certs
-
 ENTRYPOINT ./kudaki_mountain_service_app
