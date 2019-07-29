@@ -35,6 +35,6 @@ schema:
     - .realize
     - vendor
     - .vendor-new
-    scritps:
+    scripts:
     - type: before
       command: taskkill /IM "kudaki-mountain-service.exe" /F
